@@ -107,17 +107,9 @@ public class HiveEmbeddedtest {
 
 
 
-   //    res = stmt.executeQuery("select * from hive_bigpetstore_etl group by state");
-
-        ResultSetMetaData md = res.getMetaData();
-        md.toString();
-
-        while (res.next()) {
-
-            System.out.println(res.getString(1));
+        res = stmt.executeQuery("select * from hive_bigpetstore_etl group by state");
 
 
-        }
 
     }
 

@@ -15,7 +15,7 @@
         <hive.version>0.12.0</hive.version>
         <hadoop.version>1.2.1</hadoop.version>
         <thrift.version>0.9.1</thrift.version>
-        <datanucleus.version>3.2.7</datanucleus.version>
+        <datanucleus.version>3.2.5</datanucleus.version>
         <!-- set this to be true to run the intergration tests -->
         <skip.unit.tests>false</skip.unit.tests>
     </properties>
@@ -50,30 +50,29 @@
             <artifactId>bonecp</artifactId>
             <version>0.8.0.RELEASE</version>
         </dependency>
-        <!--
+        <!--   -->
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-api-jdo</artifactId>
-                    <version>3.2.4</version>
-                </dependency>
-
-            <dependency>
-                    <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-core</artifactId>
-                    <version>3.2.4</version>
+                    <version>${datanucleus.version}</version>
                 </dependency>
 
                 <dependency>
                     <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-rdbms</artifactId>
-                    <version>3.2.4</version>
+                    <artifactId>datanucleus-core</artifactId>
+                <version>${datanucleus.version}</version>
                 </dependency>
-         -->
 
         <dependency>
             <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-core</artifactId>
-            <version>${datanucleus.version}</version>
+            <artifactId>datanucleus-accessplatform-jdo-rdbms</artifactId>
+            <version>3.3.4</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-rdbms</artifactId>
+            <version>3.2.8</version>
         </dependency>
 
 
@@ -170,19 +169,11 @@
               -->
         <dependency>
             <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-common</artifactId>
-            <version>2.2.0</version>
+            <artifactId>hadoop-core</artifactId>
+            <version>${hadoop.version}</version>
+            <!--scope>provided</scope-->
         </dependency>
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-mapreduce-client-core</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-hdfs</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+
 
         <dependency>
             <groupId>commons-logging</groupId>
