@@ -1,5 +1,6 @@
 package org.bigtop.bigpetstore.hivetest;
 
+import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -14,19 +15,23 @@ import org.apache.hadoop.mapreduce.JobID;
 import org.bigtop.bigpetstore.etl.HiveETL;
 import org.bigtop.bigpetstore.generator.PetStoreJob;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HiveEmbeddedtest {
 
-    static long ID = System.currentTimeMillis();
-    String test_data_directory  =  "/tmp/BigPetStore"+ID;
+public class TestHiveEmbedded {
 
+    final static Logger log = LoggerFactory.getLogger(TestHiveEmbedded.class);
 
+    public static final long ID = System.currentTimeMillis();
+    public static final String test_data_directory  =  "/tmp/BigPetStore"+ID;
     public static final String HIVE_JDBC_DRIVER = "org.apache.hadoop.hive.jdbc.HiveDriver";
     public static final String HIVE_JDBC_EMBEDDED_CONNECTION = "jdbc:hive://";
     private static String driverName = "org.apache.hadoop.hive.jdbc.HiveDriver";
@@ -57,14 +62,8 @@ public class HiveEmbeddedtest {
 
         Statement stmt = getConnection();
         runHive(stmt, raw_generated_data, conf);
- 
-     //   Map hive=runHive(raw_generated_data);
-
-      //  System.out.println("hive:"+ hive);
 
     }
-
-
 
     private void  runHive(Statement stmt, Path pathToRawInput, Configuration conf) throws Exception {
 
@@ -105,34 +104,46 @@ public class HiveEmbeddedtest {
                 .executeQuery("LOAD DATA INPATH '<rawInput>' INTO TABLE hive_bigpetstore_etl"
                         .replaceAll("<rawInput>", pathToRawInput.toString()));
 
+   //     res = stmt.executeQuery("select * from hive_bigpetstore_etl group by state");
 
+        res = stmt.executeQuery("select * from hive_bigpetstore_etl");
 
-        res = stmt.executeQuery("select * from hive_bigpetstore_etl group by state");
+        List<Map> resultList =  resultSetToArrayList(res);
 
+        Map<String, Integer> converted = Maps.newHashMap();
+        int k = 0;
+        for(Map m : resultList) {
+            converted.put((String) m.get("product"), ((Integer)k++));
 
-
-    }
-
-
-
-    public static void setColumnTypeList(JobConf jobConf, Operator op) {
-        RowSchema rowSchema = op.getSchema();
-        if (rowSchema == null) {
-            return;
         }
-        StringBuilder columnTypes = new StringBuilder();
-        for (ColumnInfo colInfo : rowSchema.getSignature()) {
-            if (columnTypes.length() > 0) {
-                columnTypes.append(",");
+        log.info(converted.toString());
+    }    //
+
+
+    public static List<Map> resultSetToArrayList(ResultSet rs)
+            throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+        int columns = md.getColumnCount();
+        ArrayList<Map> list = new ArrayList<Map>(50);
+        while (rs.next()) {
+            HashMap row = new HashMap(columns);
+            for (int i = 1; i <= columns; ++i) {
+                row.put(md.getColumnName(i), rs.getObject(i));
             }
-            columnTypes.append(colInfo.getType().getTypeName());
+            list.add(row);
         }
-        String columnTypesString = columnTypes.toString();
-        jobConf.set(serdeConstants.LIST_COLUMN_TYPES, columnTypesString);
+
+        return list;
     }
 
 
-
+    public static Map<String, Integer> convert(String field,ResultSet r) throws Exception {
+        Map<String, Integer> converted = Maps.newHashMap();
+        for (Map m : resultSetToArrayList(r)) {
+            converted.put((String) m.get(field), ((Number) m.get("cnt")).intValue());
+        }
+        return converted;
+    }
 
     private Statement getConnection() throws ClassNotFoundException,
             SQLException {
