@@ -3,6 +3,7 @@ there is a complicated relationship between the RegX class and datanucleus
 
 1. java.lang.ClassNotFoundException: org/apache/hadoop/hive/contrib/serde2/RegexSerDe
 this class in in the;
+
 maven dependency tree,
 the  $HADOOP_HOME/lib directory
 the  $HIVE_HOME/lib directory
@@ -17,7 +18,8 @@ you run a query with  "group by" or "count"
 
 currently the  group by and count clauses are replaced by simple java code
 
-there is a minimal hive-sute.xml on the classpath that defines
+there is a minimal hive-site.xml on the classpath that defines
+
 1. jdb driver class name
 2. a JDO ConnectionURL
 3. metastore.warehouse.dir location
