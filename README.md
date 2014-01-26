@@ -1,15 +1,15 @@
 there is a complicated relationship between the RegX class and datanucleus
 
+1) java.lang.ClassNotFoundException: org/apache/hadoop/hive/contrib/serde2/RegexSerDe
+this class in 
 
-1. java.lang.ClassNotFoundException: org/apache/hadoop/hive/contrib/serde2/RegexSerDe
-this class in in
+maven dependency tree,  
+the  $HADOOP_HOME/lib directory,  
+the  $HIVE_HOME/lib directory.
 
-maven dependency tree,
-the  $HADOOP_HOME/lib directory
-the  $HIVE_HOME/lib directory
-it is a mystery why it is not being picked up at runtime
+it is a mystery why it is not being picked up at runtime.  
 
-2. a new ClassNotFound org/datanucleus/store/types/backed/Map
+2) a new ClassNotFound org/datanucleus/store/types/backed/Map
 this class is also in the Maven dependency tree
 it is a mystery why it is not being picked up at runtime
 
