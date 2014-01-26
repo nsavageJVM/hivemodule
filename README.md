@@ -2,7 +2,7 @@ there is a complicated relationship between the RegX class and datanucleus
 
 
 1. java.lang.ClassNotFoundException: org/apache/hadoop/hive/contrib/serde2/RegexSerDe
-this class in in the;
+this class in in
 
 maven dependency tree,
 the  $HADOOP_HOME/lib directory
