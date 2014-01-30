@@ -16,16 +16,25 @@
         <derby.version>10.10.1.1</derby.version>
         <hadoop.version>2.2.0</hadoop.version>
         <hive.version>0.12.0</hive.version>
-        <datanucleus.version>3.2.0-release</datanucleus.version>
+        <datanucleus.version>3.2.2</datanucleus.version>
+        <datanucleus-rdbms.version>3.2.1</datanucleus-rdbms.version>
         <!-- datanucleus.regex.version>3.0.2</datanucleus.noregex.version -->
+        <datanucleus.jdo.version>3.2.1</datanucleus.jdo.version>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
-        <!-- datanucleus-rdbms.version>3.2.5</datanucleus-rdbms.version>
-        <datanucleus.jdo.version>3.2.7</datanucleus.jdo.version>
-        <datanucleus.jdo.rdbms.version>3.3.6</datanucleus.jdo.rdbms.version>
-        <bonecp.version>0.8.0.RELEASE</bonecp.version -->
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
+            <version>0.96.0-hadoop2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>0.96.0-hadoop2</version>
+        </dependency>
         <!-- misc -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -46,6 +55,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-core</artifactId>
+            <version>${datanucleus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-rdbms</artifactId>
+            <version>${datanucleus-rdbms.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.jdo</groupId>
             <artifactId>jdo-api</artifactId>
             <version>3.0.1</version>
@@ -53,22 +72,22 @@
 
         <dependency>
             <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-core</artifactId>
-            <version>${datanucleus.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-rdbms</artifactId>
-            <version>${datanucleus.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>${datanucleus.version}</version>
+            <version>${datanucleus.jdo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.jdo</groupId>
+                    <artifactId>jdo2-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -107,6 +126,40 @@
             <artifactId>hive-contrib</artifactId>
             <version>${hive.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-metastore</artifactId>
+            <version>${hive.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-cli</artifactId>
+            <version>${hive.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-api-jdo</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-rdbms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 
         <dependency>
             <groupId>com.jolbox</groupId>

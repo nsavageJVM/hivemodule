@@ -61,13 +61,12 @@ public class TestHiveEmbedded {
         }
 
         Statement stmt = getConnection();
-        runHive(stmt, raw_generated_data, conf);
-
+     //   runHive(stmt, raw_generated_data, conf);
+        runHiveAlternative(stmt, raw_generated_data, conf);
     }
 
     private void  runHive(Statement stmt, Path pathToRawInput, Configuration conf) throws Exception {
 
-        // TODO ^^ load this in from the first input (string[0]);
         stmt.execute("DROP TABLE hive_bigpetstore_etl");
 
         String create = "CREATE TABLE hive_bigpetstore_etl ("
@@ -120,6 +119,34 @@ public class TestHiveEmbedded {
     }    //
 
 
+    private void  runHiveAlternative(Statement stmt, Path pathToRawInput, Configuration conf) throws Exception {
+
+        stmt.execute("DROP TABLE hive_bigpetstore_etl");
+    // make a simple table that actually allows things like queries
+        String create = "CREATE TABLE hive_bigpetstore_etl ("
+                + "  state STRING,"
+                + "  trans_id STRING,"
+                + "  lname STRING,"
+                + "  fname STRING,"
+                + "  date STRING,"
+                + "  price STRING,"
+                + "  product STRING"
+                + ")";
+
+        System.out.println(create);
+        ResultSet res = stmt.executeQuery(create);
+
+        res = stmt
+                .executeQuery("LOAD DATA INPATH '<rawInput>' INTO TABLE hive_bigpetstore_etl"
+                        .replaceAll("<rawInput>", pathToRawInput.toString()));
+
+        res = stmt.executeQuery("select * from hive_bigpetstore_etl group by state");
+
+    }
+
+
+
+
     public static List<Map> resultSetToArrayList(ResultSet rs)
             throws SQLException {
         ResultSetMetaData md = rs.getMetaData();
@@ -154,5 +181,8 @@ public class TestHiveEmbedded {
         Statement stmt = con.createStatement();
         return stmt;
     }
+
+
+
 
 }
