@@ -13,12 +13,16 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <slf4j.version>1.7.5</slf4j.version>
         <guava.version>15.0</guava.version>
-        <derby.version>10.8.1.2</derby.version>
+        <derby.version>10.10.1.1</derby.version>
         <hadoop.version>2.2.0</hadoop.version>
         <hive.version>0.12.0</hive.version>
-        <datanucleus.version>3.2.2</datanucleus.version>
-        <datanucleus.jpa.version>3.2.1</datanucleus.jpa.version>
+        <datanucleus.version>3.2.0-release</datanucleus.version>
+        <!-- datanucleus.regex.version>3.0.2</datanucleus.noregex.version -->
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
+        <!-- datanucleus-rdbms.version>3.2.5</datanucleus-rdbms.version>
+        <datanucleus.jdo.version>3.2.7</datanucleus.jdo.version>
+        <datanucleus.jdo.rdbms.version>3.3.6</datanucleus.jdo.rdbms.version>
+        <bonecp.version>0.8.0.RELEASE</bonecp.version -->
     </properties>
 
     <dependencies>
@@ -41,31 +45,32 @@
             <version>${derby.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.jdo</groupId>
+            <artifactId>jdo-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
             <version>${datanucleus.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
-            <version>${datanucleus.jpa.version}</version>
+            <version>${datanucleus.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>${datanucleus.jpa.version}</version>
+            <version>${datanucleus.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-accessplatform-jdo-rdbms</artifactId>
-            <version>${datanucleus.jpa.version}</version>
-            <type>pom</type>
-        </dependency>
 
         <!-- hadoop -->
         <dependency>

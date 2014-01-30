@@ -23,3 +23,23 @@ there is a minimal hive-site.xml on the classpath that defines
 1. jdb driver class name
 2. a JDO ConnectionURL
 3. metastore.warehouse.dir location
+
+
+Issue is hive 12 datanuclus incompatability with org.apache.hadoop.hive.contrib.serde2.RegexSerDe
+
+I have the hive
+
+HADOOP_HOME=/home/ubu/hadoop
+JAVA_HOME=/usr/lib/jvm/java-7-oracle
+
+    <property>
+        <name>hive.aux.jars.path</name>
+        <value>file:///home/ubu/hadoop/lib/hive-contrib-0.12.0.jar </value>
+        <description>This JAR file  available to all users for alljobs</description>
+    </property>
+
+java.lang.ClassNotFoundException:
+org.datanucleus.store.types.backed.Map   <datanucleus.version>3.0.2</datanucleus.version>
+
+java.lang.ClassNotFoundException:
+org/apache/hadoop/hive/contrib/serde2/RegexSerDe  <datanucleus.version>3.2.0-release</datanucleus.version>

@@ -104,9 +104,9 @@ public class TestHiveEmbedded {
                 .executeQuery("LOAD DATA INPATH '<rawInput>' INTO TABLE hive_bigpetstore_etl"
                         .replaceAll("<rawInput>", pathToRawInput.toString()));
 
-   //     res = stmt.executeQuery("select * from hive_bigpetstore_etl group by state");
+        res = stmt.executeQuery("select * from hive_bigpetstore_etl group by state");
 
-        res = stmt.executeQuery("select * from hive_bigpetstore_etl");
+      //  res = stmt.executeQuery("select * from hive_bigpetstore_etl");
 
         List<Map> resultList =  resultSetToArrayList(res);
 
