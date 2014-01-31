@@ -20,6 +20,7 @@
         <datanucleus-rdbms.version>3.2.1</datanucleus-rdbms.version>
         <datanucleus.jdo.version>3.2.1</datanucleus.jdo.version>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
+        <antlr.version>3.5</antlr.version>
     </properties>
 
     <dependencies>
@@ -28,13 +29,13 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr</artifactId>
-            <version>3.4</version>
+            <version>${antlr.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr-runtime</artifactId>
-            <version>3.4</version>
+            <version>${antlr.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
