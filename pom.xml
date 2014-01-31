@@ -13,17 +13,36 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <slf4j.version>1.7.5</slf4j.version>
         <guava.version>15.0</guava.version>
-        <derby.version>10.10.1.1</derby.version>
+        <derby.version>10.4.2.0</derby.version>
         <hadoop.version>2.2.0</hadoop.version>
         <hive.version>0.12.0</hive.version>
         <datanucleus.version>3.2.2</datanucleus.version>
         <datanucleus-rdbms.version>3.2.1</datanucleus-rdbms.version>
-        <!-- datanucleus.regex.version>3.0.2</datanucleus.noregex.version -->
         <datanucleus.jdo.version>3.2.1</datanucleus.jdo.version>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
     </properties>
 
     <dependencies>
+
+
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>3.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr-runtime</artifactId>
+            <version>3.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>ST4</artifactId>
+            <version>4.0.4</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.hbase</groupId>
@@ -165,6 +184,12 @@
             <groupId>com.jolbox</groupId>
             <artifactId>bonecp</artifactId>
             <version>${bonecp.version}</version>
+            <exclusions>
+            <exclusion>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+            </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- logging -->
@@ -212,7 +237,7 @@
     </dependencies>
 
     <build>
-        <finalName>MapReduceModule</finalName>
+        <finalName>HiveModule</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
